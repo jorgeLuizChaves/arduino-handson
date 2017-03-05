@@ -23,17 +23,19 @@ void setup() {
   setupLeds();
   setupButtons();
   setupVetorLeds();
-
-  turnOnAll();
+//  turnOnAll();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  for(int index = 0; index < NUMBER_OF_LEDS; index++){
-//    blinkLed(leds[index]);
-//  }
+   int randomNumber = analogRead(0);
+  randomSeed(randomNumber);
+  Serial.println(randomNumber);
+  for(int index = 0; index < NUMBER_OF_LEDS; index++){
+    blinkLed(leds[index]);
+  }
  int state = getButtonPressed();
- Serial.println(state);
+
 }
 
 int getButtonPressed() {
@@ -61,9 +63,15 @@ void setupButtons() {
 }
 
 void setupVetorLeds() {
-  leds[0] = LED_RED_1;
-  leds[1] = LED_GREEN_2;
-  leds[2] = LED_RED_3;
+  int randomNumber = analogRead(0);
+  randomSeed(randomNumber);
+  for(int index = 0; index < NUMBER_OF_LEDS; index++){
+    leds[index] = sortColor();
+  }
+}
+
+int sortColor(){
+  return random(LED_RED_1, LED_RED_3 + 1);
 }
 
 int blinkLed(int ledPosition){
